@@ -9,10 +9,10 @@ void setup() {
 }
 
 void loop() {
-  uarm.moveTo(1,-21,20);
-  uarm.pumpOn();
+  uarm.moveTo(.01,-21,20);
   uarm.moveToGround();
-  uarm.moveTo(1,-21,20);
+  uarm.pumpOn();
+  uarm.moveTo(.01,-21,20);
   uarm.moveTo(-19,0,25);
   uarm.pumpOff();
 
