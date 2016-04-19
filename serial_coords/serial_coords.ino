@@ -75,6 +75,8 @@ void goToCoord(String commandsString) {
 		commands[i].replace("(", "");
 	}
 
+	commandsString = "";
+
 	double coordXYZ[arraySize][4];
 	for (int i = 0; i < arraySize; i++) {
 		int comma1 = -1;
@@ -111,6 +113,7 @@ void goToCoord(String commandsString) {
 		}
 		
 	}
+	delete(commands);
 
 	for (int i = 0; i < arraySize; i++) {
 		if (coordXYZ[i][0] == MOVETO) {
