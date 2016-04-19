@@ -10,8 +10,8 @@ int x;
 void setup() {
   uarm.setup();
   
-  // reserve 200 bytes for the inputString:
-  
+  //reserve 200 bytes for the inputString:
+  inputString.reserve(100);
   /*Serial.print("all commands must be enclosed in parenthesis\n"
 	  "commands can be sent sequentially in the same line\n"
 	  "ex: (command)(command)(command)\n"
@@ -107,6 +107,7 @@ void goToCoord(String commandsString) {
 			else if (commands[i].equalsIgnoreCase("a")) coordXYZ[i][0] = ALARM;
 			else if (commands[i].equalsIgnoreCase("help")) coordXYZ[i][0] = HELP;
 			else if (commands[i].equalsIgnoreCase("d")) coordXYZ[i][0] = DETACH_ALL;
+			//else if (commands[i].equalsIgnoreCase("l")) coordXYZ[i][0] = GET_LOCATION;
 		}
 		
 	}
@@ -114,16 +115,16 @@ void goToCoord(String commandsString) {
 	for (int i = 0; i < arraySize; i++) {
 		if (coordXYZ[i][0] == MOVETO) {
 			uarm.moveTo(coordXYZ[i][1], coordXYZ[i][2], coordXYZ[i][3]);
-			Serial.println("Moved to (" + (String)(uarm.getCalX()) + "," + (String)(uarm.getCalY()) + "," + (String)(uarm.getCalZ()) + ")");
+			//Serial.println("Moved to: (" + (String)(uarm.getCalX()) + "," + (String)(uarm.getCalY()) + "," + (String)(uarm.getCalZ()) + ")");
 		}
 		else if (coordXYZ[i][0] == MOVETO_RELATIVE) {
 			uarm.moveTo(coordXYZ[i][1], coordXYZ[i][2], coordXYZ[i][3],RELATIVE,1);
-			Serial.println("Moved to (" + (String)(uarm.getCalX()) + "," + (String)(uarm.getCalY()) + "," + (String)(uarm.getCalZ()) + ")");
+			//Serial.println("Moved to: (" + (String)(uarm.getCalX()) + "," + (String)(uarm.getCalY()) + "," + (String)(uarm.getCalZ()) + ")");
 		}
 		else if (coordXYZ[i][0] == MOVETO_GROUND) {
 			uarm.moveToGround();
 			//uarm.detachAll(); 
-			Serial.println("Moved to (" + (String)(uarm.getCalX()) + "," + (String)(uarm.getCalY()) + "," + (String)(uarm.getCalZ()) + ")");
+			//Serial.println("Moved to: (" + (String)(uarm.getCalX()) + "," + (String)(uarm.getCalY()) + "," + (String)(uarm.getCalZ()) + ")");
 		}else if (coordXYZ[i][0] == PUMP_ON) {
 			uarm.pumpOn();
 			Serial.println("Pump On");
@@ -137,15 +138,19 @@ void goToCoord(String commandsString) {
 			Serial.println("(x,y,z) moves to coordinate (x,y,z)");
 			Serial.println("(0,x,y,z) moves to coordinate (x,y,z)");
 			Serial.println("(1,x,y,z) moves by (x,y,z) in their respective directions");
-			Serial.println("(g)moves to ground");
+			Serial.println("(g) moves to ground");
 			Serial.println("(n) turns on pump");
 			Serial.println("(f) turns off pump");
 			Serial.println("(a) sounds alarm");
 			Serial.println("(d) detaches all servos");
+			Serial.println("(l) gets the current location of the arm");
 		}else if (coordXYZ[i][0] == DETACH_ALL) {
 			uarm.detachAll();
 			Serial.println("Detach all");
-		}
+		}/*else if (coordXYZ[i][0] == GET_LOCATION) {
+			uarm.calXYZ();
+			Serial.println("Location: (" + (String)(uarm.getCalX()) + "," + (String)(uarm.getCalY()) + "," + (String)(uarm.getCalZ()) + ")");
+		}*/
 
 	}
 	
